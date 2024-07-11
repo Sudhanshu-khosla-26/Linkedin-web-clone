@@ -1,0 +1,19 @@
+.emojipicker{
+    max-height: calc(50vh - 48px);
+    background: transparent;   
+    position: absolute !important;
+    z-index:20;
+    right: -48px;
+    bottom: 60px;
+
+    .epr_-kg0voo {
+        display: none;
+    }
+    /* left: 432px; */
+
+    @media(max-width:768px){
+        margin-right: 4px;
+        right: 0;
+        left: 2px;
+      }
+}
