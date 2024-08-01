@@ -3,17 +3,15 @@ import { getAuth, GoogleAuthProvider  } from "firebase/auth";
 import { getStorage } from "firebase/storage";
 import { getDatabase } from "firebase/database";
 
-
-
 const firebaseConfig = {
-  apiKey: "AIzaSyCZFuHY622Ftn0NGpzxiE83qaX3eJGirGA",
-  authDomain: "linkedin-clone-df57c.firebaseapp.com",
-  databaseURL: "https://linkedin-clone-df57c-default-rtdb.firebaseio.com",
-  projectId: "linkedin-clone-df57c",
-  storageBucket: "linkedin-clone-df57c.appspot.com",
-  messagingSenderId: "342846356134",
-  appId: "1:342846356134:web:cfe1e2fc7bbc5056e7d267",
-  measurementId: "G-ZCJ5S3V4L5"
+  apiKey: "AIzaSyBL6yNDYSUm3bZdGvNCVhQ1bbHU_1n9KbE",
+  authDomain: "linkedin-clone-24830.firebaseapp.com",
+  databaseURL: "https://linkedin-clone-24830-default-rtdb.firebaseio.com",
+  projectId: "linkedin-clone-24830",
+  storageBucket: "linkedin-clone-24830.appspot.com",
+  messagingSenderId: "1057766394323",
+  appId: "1:1057766394323:web:4ba9b550afdb2e2b75c726",
+  measurementId: "G-G9RVDFC7BN"
 };
 
 

@@ -5,6 +5,7 @@ import { connect } from "react-redux";
 import { PostAPI } from "../actions";
 import { PostArticleAPI } from "../actions";
 import EmojiPicker from "emoji-picker-react";
+import { Timestamp } from "firebase/firestore";
 
 const PostModal = (props) => {
   const [editorText, setEditorText] = useState("");
@@ -56,12 +57,14 @@ const PostModal = (props) => {
         Paragraph: props.TitlePara,
         Title: props.TitleText,
         TitleImage: props.TitleImage,
-        timestamp: "09/06/2024",
+        timestamp: Timestamp.now(), 
+        // timestamp: new Date().getDate(),
+        // hours: new Date().getHours()
         // timestamp: new Date().getDate() + " , " + new Date().getMinutes() + ":" + new Date().getSeconds(),
+
     };
 
     
-
     props.PostArticle(payload);
     reset(e);
     props.resetarticle();
@@ -78,12 +81,14 @@ const PostModal = (props) => {
         PhotoVideo: "",
         user: props.User,
         description : editorText,
+        timestamp: Timestamp.now(),
         // Paragraph: `${props.TitlePara === ""}` ? "" : props.TitlePara,
         // Title:`${props.TitleText === ""}` ? "" : props.TitleText,
         // TitleImage: `${props.TitleImage === ""}` ? "" : URL.createObjectURL(props.TitleImage),
-        timestamp: "09/06/2024",
+        // timestamp:  new Date().getDate(), //+ "/" + new Date().getMonth() + "/" + new Date().getFullYear(),
         // timestamp: new Date().getDate() + " , " + new Date().getMinutes() + ":" + new Date().getSeconds(),
-    };
+        // hours: new Date().getHours(),
+      };
 
     
 

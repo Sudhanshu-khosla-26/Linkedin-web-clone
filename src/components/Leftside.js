@@ -20,13 +20,13 @@ const Leftside = (props) => {
                 <img src="/images/user.svg" alt="" />
               )}
             </Photo>
-            <Links>
+            <p style={{color: "rgba(0,0,0,0.9", textDecoration: "none", marginTop: "4px", padding: "0"}}>
               {props.User ? props.User.displayName : "Add UserName"}
-            </Links>
+            </p>
           </Link>
           <a>
             <UserDescription>
-              Frontend Developer | Btech 1st Year Student |
+              Frontend Developer | Btech 2st Year Student |
             </UserDescription>
           </a>
           <a>
@@ -41,7 +41,7 @@ const Leftside = (props) => {
         </UserInfo>
       </ArtCard>
 
-    <Widget DropdownInfo={DropdownInfo}>
+    <Widget dropdownInfo={DropdownInfo}>
           <a>
             <div>
               <span>Boost your job search with Premium</span>
@@ -54,7 +54,7 @@ const Leftside = (props) => {
           </a>
         </Widget>
 
-      <CommunityCard DropdownInfo={DropdownInfo}>
+      <CommunityCard dropdownInfo={DropdownInfo}>
         <Item>
           <a>
             <span>
@@ -242,7 +242,7 @@ const Widget = styled(ArtCard)`
   }
 
  @media (max-width: 768px) { 
-   ${props => props.DropdownInfo === false && `
+   ${props => props.dropdownInfo === false && `
       display: none;
       `}
   }
@@ -334,7 +334,7 @@ const CommunityCard = styled(ArtCard)`
   }
 
   @media (max-width: 768px) { 
-   ${props => props.DropdownInfo === false && `
+   ${props => props.dropdownInfo === false && `
       display: none;
       `}
   }

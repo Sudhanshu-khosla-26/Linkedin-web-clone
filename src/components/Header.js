@@ -2,8 +2,24 @@ import { connect } from "react-redux";
 import styled from "styled-components";
 import { signOutAPI } from "../actions";
 import { Link } from "react-router-dom";
+import { useState } from "react";
+import {
+  getUserconnectInviteSendedAPI,
+  getUserconnectInvitesAPI,
+} from "../actions";
+import { useEffect } from "react";
 
 const Header = (props) => {
+  const [active, setactive] = useState(false)
+
+  useEffect(() => {
+    const payload = {
+      user: props.User,
+    };
+    props.getUserconnectinvites(payload);
+    props.getUserconnectInviteSended(payload);
+  }, []);
+
   return (
     <div>
       <Container>
@@ -23,7 +39,7 @@ const Header = (props) => {
           </Search>
           <Nav>
             <NavListWrap>
-              <NavList className="active">
+              <NavList  className="active">
                 <Link to="/feed">
                   <img src="/images/nav-home.svg" alt="" />
                   <span>Home</span>
@@ -34,25 +50,29 @@ const Header = (props) => {
               <Link to="/mynetwork/grow/">
                 <img src="/images/nav-network.svg" alt="" />
                 <span>My Network</span>
-              </Link>
+                {props.UserConnectionsInviteList.length > 0 &&
+                <img src="/images/dot.png" alt="" className="notice" />}
+                </Link>
             </NavList>
 
             <NavList>
-              <Link to="/jobs">
+              {/* <Link to="/jobs"> */}
+              <Link >
                 <img src="/images/nav-jobs.svg" alt="" />
                 <span>Jobs</span>
               </Link>
             </NavList>
 
-            <NavList>
-              <Link to="">
+            <NavList className="Message">
+              <Link to={`/messaging/thread/:ChatId`}>
                 <img src="/images/nav-messaging.svg" alt="" />
                 <span>Messaging</span>
               </Link>
             </NavList>
 
             <NavList>
-              <Link to="notifications/?filter=all">
+              {/* <Link to="notifications/?filter=all"> */}
+              <Link >
                 <img src="/images/nav-notifications.svg" alt="" />
                 <span>Notifications</span>
               </Link>
@@ -156,6 +176,7 @@ const Search = styled.div`
 
   @media (max-width: 768px) {
      input{
+      display: none;
       width: 260px !important;
       /* display: none; */
      }
@@ -175,37 +196,42 @@ const SearchIcon = styled.div`
   justify-content: center;
   align-items: center;
 
-  /* @media (max-width: 768px) {
+  @media (max-width: 768px) {
     width: 24px;
     height: 24px;
     top: 0px;
-    margin-left: 24px;
+    margin-left: 4px;
     position: relative;
     vertical-align: middle;
+    margin-right: 18px;
     img{ 
       width: 24px; 
       height: 24px;
     }
-    } */
+    }
 `;
 
 const Nav = styled.nav`
   margin-left: auto;
   display: block;
   @media (max-width: 768px) {
-    position: fixed;
-    left: 0;
-    bottom: 0;
-    background: white;
+    /* position: fixed; */
+    /* left: 0; */
+    /* bottom: 0; */
+    /* background: white; */
     width: 100%;
   }
-`;
+  `;
 
 const NavListWrap = styled.ul`
   display: flex;
   flex-wrap: nowrap;
   list-style-type: none;
 
+  @media (max-width: 768px) {
+    gap: 20px;
+  }
+  
   .active {
     span:after {
       content: "";
@@ -238,14 +264,29 @@ const NavList = styled.li`
     position: relative;
     text-decoration: none;
 
+
     span {
       color: rgba(0, 0, 0, 0.6);
       display: flex;
       align-items: center;
     }
 
+    .notice{
+      position: absolute;
+      top: 2px;
+    right: 18px;
+    width: 20px;
+    }
+
     @media (max-width: 768px) {
-      min-width: 70px;
+      min-width: fit-content;
+      img{
+        width: 24px;
+        height: 24px;
+      }
+      span{
+        display: none;
+      }
     }
   }
 
@@ -275,6 +316,11 @@ const SignOut = styled.div`
 
   &:hover{
     background-color: rgba(0,0,0,0.10)
+  }
+
+  @media(max-width: 768px){
+    right: 56px;
+    top: 55px;
   }
 `;
 
@@ -307,6 +353,10 @@ const User = styled(NavList)`
 
 const Work = styled(User)`
   border-left: 1px solid rgba(0, 0, 0, 0.08);
+
+  @media (max-width: 768px) {
+        display: none;
+  }
 `;
 
 const Premium = styled.div`
@@ -327,17 +377,29 @@ const Premium = styled.div`
   span{
     align-items: center;
   }
+
+  @media (max-width: 768px) {
+    display: none;
+  }
+
   `;
 
 const mapStateTOProps = (state) => {
   return {
     User: JSON.parse(localStorage.getItem('User')),
     // user: state.userState.user,
+    UserConnectionsInviteList: state.articleState.UserConnectionsInviteList,
+    UserConnectionsInviteSendedList:
+      state.articleState.UserConnectionsInviteSendedList,
   };
-};
+  };
 
 const mapDispatchToProps = (dispatch) => ({
   signOut: () => dispatch(signOutAPI()),
+  getUserconnectinvites: (payload) =>
+    dispatch(getUserconnectInvitesAPI(payload)),
+  getUserconnectInviteSended: (payload) =>
+    dispatch(getUserconnectInviteSendedAPI(payload)),
 });
 
 

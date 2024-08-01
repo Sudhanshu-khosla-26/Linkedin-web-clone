@@ -2,13 +2,29 @@ import styled from "styled-components";
 import Footer from "./Footer";
 import Grow from "./Grow";
 import { useState } from "react";
+import { connect } from "react-redux";
+import { getUserconnectionlistAPI } from "../actions";
+import { Link, useNavigate } from "react-router-dom";
+import { useEffect } from "react";
+import FloatingChatbar from "./FloatingChatbar";
 
-const MyNetwork = () => {
+const MyNetwork = (props) => {
+  const navigate = useNavigate();
   const [DropdownInfo, setDropdownInfo] = useState(false);
+
+  const payload = {
+    user: props.User,
+}
+
+useEffect(()=> {
+    props.getUserconnectionlist(payload)
+},[props.user])
+
   return (
     <>
       <Container>
-        <div>
+      {!props.User && navigate("/")} 
+        <div className="dropdown">
           <ArtCard>
             <Networkfooter>
               <div className="mynetwork" onClick={() => {DropdownInfo? setDropdownInfo(false) : setDropdownInfo(true)}} >
@@ -26,11 +42,13 @@ const MyNetwork = () => {
             {DropdownInfo &&
             <>
               <div className="connections">
-                <span>
+              <Link style={{width: '100%',display: "flex", textDecoration: "none", justifyContent: "space-between"}} to={"/mynetwork/invite-connect/connections/"}>
+                <span >
                   <img src="/images/connections-icon.png" alt="" />
                   Connections
                 </span>
-                <span>198</span>
+                <span>{props.Userconnectionslist.length}</span>
+              </Link>
               </div>
               <div className="following_followers">
                 <span>
@@ -75,7 +93,7 @@ const MyNetwork = () => {
             </>}
             </Networkfooter>
           </ArtCard>
-          <Footer />
+          <Footer className="footer" />
         </div>
 
       <div className="Grow_CatchBtns">
@@ -94,12 +112,18 @@ const MyNetwork = () => {
 
         <Grow />
       </div>
+
+      <div className="homechat">
+        <FloatingChatbar />
+      </div>
+      <div className="homechatbox">
+        {/* <FloatingChatbox /> */}
+      </div>
       </Container>
     </>
   );
 };
 
-export default MyNetwork;
 
 const Container = styled.div`
   display: flex;
@@ -108,6 +132,36 @@ const Container = styled.div`
   width: 84%;
   justify-content: space-between;
   gap: 30px;
+
+  .homechat{
+    position: fixed;
+    bottom: 0;
+    right: 22px;
+    box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+  }
+
+  .homechatbox{
+    position: fixed;
+    bottom: 0;
+    right: 326px;
+    box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+  }
+
+  .dropdown{
+    display: block;
+    position: sticky;
+    top: 82px;
+    height: fit-content;
+  }
+
+  @media (max-width: 768px) {
+    margin: 80px auto  80px auto;
+    flex-direction: column;
+    width: 374px;
+    .dropdown{
+      position: static;
+    }
+  }
 `;
 
 const ArtCard = styled.div`
@@ -120,11 +174,26 @@ const ArtCard = styled.div`
   position: relative;
   border: none;
   box-shadow: 0 0 0 1px rgb(0 0 0 /15%), 0 0 0 rgba(0 0 0 /20%);
+  
+  @media (max-width: 768px) {
+    width: 370px !important;
+  }
 `;
 
 const Networkfooter = styled.div`
   width: 300px;
   max-height: 405px;
+  /* position: fixed; */
+  background-color: #fff;
+  /* z-index:20; */
+  /* top: 80px; */
+
+  @media (max-width: 768px) {
+    /* width: 420px !important; */
+    & > div{
+      width: 332px !important;
+    }
+  }
 
   & > div {
     display: flex;
@@ -133,6 +202,8 @@ const Networkfooter = styled.div`
     height: 24px;
     width: 252px;
     padding: 12px 24px;
+
+
     &:hover{
       background-color: #F3F3F3;
     }
@@ -150,6 +221,8 @@ const Networkfooter = styled.div`
         height: 24px;
       }
     }
+
+    
   }
 
   .hashtags{
@@ -180,6 +253,10 @@ const Networkfooter = styled.div`
         width: 16px;
         height: 16px;
       }
+    }
+
+    @media (max-width: 768px) {
+      width: 350px !important;
     }
   }
 `;
@@ -227,4 +304,23 @@ const HeaderBtns = styled(ArtCard)`
       width: 65px;
     }
   }
+
+  @media (max-width: 768px) {
+    width: 348px !important;
+  }
 `;
+
+
+
+const mapStateTOProps = (state) => {
+  return {
+    User: JSON.parse(localStorage.getItem("User")),
+    Userconnectionslist: state.articleState.Userconnectionslist,
+  };
+};
+
+const mapDispatchToProps = (dispatch) => ({
+  getUserconnectionlist: (payload) => dispatch(getUserconnectionlistAPI(payload)),
+});
+
+export default connect(mapStateTOProps, mapDispatchToProps)(MyNetwork);

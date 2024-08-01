@@ -57,7 +57,7 @@ const Articles = (props) => {
     const image = e.target.files[0];
     // console.log(image);
     setTitleImage(image);
-    console.log(TitlePara);
+    // console.log(TitlePara);
   };
 
 
@@ -125,7 +125,10 @@ const Articles = (props) => {
                 Manage
                 <img src="/images/arrow-down-btn.png" alt="" />
               </button>
-              <button onClick={handleClick} >
+              <button className="Next" style={(TitlePara==="" || TitleImage==="" || TitleText === "") ? 
+                {cursor: "not-allowed", opacity: "0.8"} : null}
+                disabled={TitlePara==="" || TitleImage==="" || TitleText === ""}
+                onClick={handleClick} >
                 Next
                 <img src="/images/arrow-right-btn.png" alt="" />
               </button>
@@ -334,6 +337,7 @@ const Btns = styled.div`
       background: #ebf4fd;
     }
   }
+
 `;
 
 const TextStyleButtons = styled.div`
@@ -609,6 +613,8 @@ const mapStateTOProps = (state) => {
   };
 };
 
-const mapDispatchToProps = (dispatch) => ({});
+const mapDispatchToProps = (dispatch) => ({
+
+});
 
 export default connect(mapStateTOProps, mapDispatchToProps)(Articles);

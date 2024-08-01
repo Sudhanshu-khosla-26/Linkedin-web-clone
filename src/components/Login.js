@@ -9,9 +9,7 @@ const Login = (props) => {
   return (
 
     <Container>
-        {props.user && navigate("/feed") &&
-            console.log(props.user)
-        }
+        {props.user && navigate("/feed") }
         <Nav>
             <a href="/">
                 <img src="/images/login-logo.svg" alt="" />
@@ -39,6 +37,7 @@ const Login = (props) => {
 
 const Container = styled.div`
     padding:0px;  
+    
 `;
 
 const Nav = styled.nav`

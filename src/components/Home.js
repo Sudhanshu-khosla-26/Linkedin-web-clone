@@ -4,9 +4,12 @@ import Rightside from "../components/Rightside";
 import Main from "../components/Main";
 import { useNavigate } from "react-router-dom";
 import { connect } from "react-redux";
+import FloatingChatbar from "./FloatingChatbar";
 
 const Home = (props) => {
   const navigate = useNavigate();
+  
+
   return ( <>
     {!props.User&& navigate("/")} 
     <Container>
@@ -22,6 +25,13 @@ const Home = (props) => {
         <Rightside />
       </Layout>
 
+
+      <div className="homechat">
+        <FloatingChatbar/>
+      </div>
+      <div className="homechatbox">
+        {/* <FloatingChatbox /> */}
+      </div>
     </Container>
   </>
   )
@@ -31,6 +41,20 @@ const Container = styled.div`
   padding-top: 52px;
   max-width: 84%;
   margin: 0 auto;
+
+  .homechat{
+    position: fixed;
+    bottom: 0;
+    right: 22px;
+    box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+  }
+
+  .homechatbox{
+    position: fixed;
+    bottom: 0;
+    right: 326px;
+    box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+  }
 
   @media (max-width: 768px) { 
     max-width: 100%;
